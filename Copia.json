@@ -1,0 +1,37 @@
+{"notebooks": [
+    {
+        "notes": [
+            {
+                "note": "Loremipsumdolorsitamet,consecteturadipisicingelit.Etofficiarerumarchitectomolestiasipsamquiatemporequod,quasprovidentharumdelenititeneturfugiatautemnamnumquamdoloresvoluptas,sinteveniet.",
+                "id_note": 1,
+                "titulo": "Minota",
+                "fecha_creacion": "2017-05-01",
+                "fecha_modificacion": "2017-05-09"
+            },
+            {
+                "note": "elnopemk",
+                "id_note": 2,
+                "titulo": "Miotranota",
+                "fecha_creacion": "2017-04-11",
+                "fecha_modificacion": "2017-05-09"
+            }
+        ],
+        "id_notebook": 1,
+        "fecha_creacion": "2017-04-10",
+        "fecha_modificacion": "2017-05-10",
+        "nombre": "Libreta"
+    },
+    {
+        "notes": [{
+            "note": "Loremipsumdolorsitamet,consecteturadipisicingelit.Etofficiarerumarchitectomolestiasipsamquiatemporequod,quasprovidentharumdelenititeneturfugiatautemnamnumquamdoloresvoluptas,sinteveniet.",
+            "id_note": 1,
+            "titulo": "Minotapro",
+            "fecha_creacion": "2017-05-01",
+            "fecha_modificacion": "2017-05-09"
+        }],
+        "id_notebook": 2,
+        "fecha_creacion": "2017-04-10",
+        "fecha_modificacion": "2017/05/19",
+        "nombre": "Mi segunda libreta"
+    }
+]}

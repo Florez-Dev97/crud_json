@@ -7,6 +7,9 @@ package clases;
 import config.Manejador;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,10 +30,18 @@ public class Main {
             admin.Conectar();
             admin.setNom_bd("notebooks");
             admin.setNom_coleccion("notebooks");
-            JSONObject busqueda = admin.Select( new JSONObject("{id_notebook: 2}") );
             
-            System.out.println("Busqueda:");
-            System.out.println( busqueda.toString(4) );
+            DateFormat format_date = new SimpleDateFormat("yyyy/MM/dd");
+            Date fecha = new Date();
+            String date_now = format_date.format(fecha);
+        
+            JSONObject cambio = new JSONObject("{nombre: \"Mi segunda libreta\", fecha_modificacion: \""+ date_now +"\"}");
+            
+            boolean exito = admin.update(cambio, new JSONObject("{id_notebook: 2}"));
+            
+            if(exito) {
+                System.out.println("Registro modificado de manera satisfactoria");
+            }
         } catch(FileNotFoundException fe) {
             fe.printStackTrace();
         
