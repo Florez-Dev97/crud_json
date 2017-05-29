@@ -42,7 +42,13 @@
 					"fecha_creacion": "2017-05-01",
 					"fecha_modificacion": "2017-05-09"
 				}
-			]
+			],
+                        "prueba": [
+                            {
+                                "id_pedo": 1,
+                                "texto": "Nada"
+                            }
+                        ]
 		}
 	]
 }

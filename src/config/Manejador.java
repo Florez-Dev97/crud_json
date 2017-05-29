@@ -229,7 +229,7 @@ public class Manejador {
         return retorno;
     }
     
-    public boolean update(JSONObject changes, JSONObject criteria) throws JSONException, IOException {
+    public boolean update(JSONObject criteria, JSONObject changes) throws JSONException, IOException {
         JSONObject js_obj = new JSONObject( this.src_archivo );
         JSONArray js_array = (JSONArray) js_obj.get( this.nom_coleccion );
         
@@ -249,6 +249,55 @@ public class Manejador {
             
             js_obj.put(this.nom_coleccion, js_array.put(idx, busqueda));
             retorno = true;
+        }
+        
+        this.src_archivo = js_obj.toString(4);
+        this.saveFile();
+        return retorno;
+    }
+    
+    public boolean updateIntoArray(JSONObject criteria, JSONObject changes) throws JSONException, IOException {
+        boolean retorno = false;
+        
+        JSONObject js_obj = new JSONObject( this.src_archivo );
+        JSONArray js_array = (JSONArray) js_obj.get( this.nom_coleccion );
+        
+        if(criteria.has("idx")) { 
+            int idx_registro = criteria.getInt("idx");
+            JSONObject registro = js_array.getJSONObject(idx_registro);
+            JSONArray arr_registro, arr_criteria, arr_changes;
+            JSONObject obj_arr_registro, obj_arr_criteria, obj_arr_changes;
+
+            Iterator it_changes = changes.keys();
+
+            while(it_changes.hasNext()) {
+                String key = it_changes.next().toString();
+
+                int idx_arr_registro = 0;
+                arr_registro = registro.getJSONArray(key);
+                arr_criteria = criteria.getJSONArray(key);
+                arr_changes = changes.getJSONArray(key);
+
+                obj_arr_criteria = arr_criteria.getJSONObject(0);
+                obj_arr_changes = arr_changes.getJSONObject(0);
+                
+
+                idx_arr_registro = obj_arr_criteria.getInt("idx");
+                obj_arr_registro = arr_registro.getJSONObject( idx_arr_registro );
+
+                Iterator field_changes = obj_arr_changes.keys();
+                while(field_changes.hasNext()) {
+                    String key_change = field_changes.next().toString();
+                    obj_arr_registro.put(key_change, obj_arr_changes.get(key_change));
+                }
+
+                arr_registro.put(idx_arr_registro, obj_arr_registro);
+                registro.put(key, arr_registro);
+
+                js_obj.put(this.nom_coleccion, js_array.put(idx_registro, registro));
+                retorno = true;
+            }
+        
         }
         
         this.src_archivo = js_obj.toString(4);
