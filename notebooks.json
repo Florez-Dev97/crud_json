@@ -16,7 +16,14 @@
 				{
 					"id_note": 2,
 					"titulo": "Mi otra nota",
-					"note": "el nope mk",
+					"note": "todo el mundo es un idiota excepto yo",
+					"fecha_creacion": "2017-04-11",
+					"fecha_modificacion": "2017-05-09"
+				},
+				{
+					"id_note": 3,
+					"titulo": "Claves del GTA :v",
+					"note": "R1 O R2 -> L1 L2 X X cuadrado R1",
 					"fecha_creacion": "2017-04-11",
 					"fecha_modificacion": "2017-05-09"
 				}
