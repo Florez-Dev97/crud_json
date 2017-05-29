@@ -53,7 +53,7 @@ public class Main {
             String date_now = format_date.format(fecha);
         
             
-            JSONObject param_1 = new JSONObject("{id_notebook: 2}");
+            JSONObject param_1 = new JSONObject("{id_notebook: 1}");
             
             JSONObject busqueda = admin.Select(param_1);
             
@@ -62,23 +62,23 @@ public class Main {
             
             } else {
                 JSONObject[] obj_param_arr = {
-                    new JSONObject("{ notes: [{id_note: 4}] }"),
+                    new JSONObject("{ notes: [{id_note: 1}] }"),
                     new JSONObject("{ prueba: [{id_pedo: 1}] }") 
                 };
                 
-                JSONObject nota = admin.SelectIntoArray(busqueda, obj_param_arr[1]); 
+                JSONObject nota = admin.SelectIntoArray(busqueda, obj_param_arr[0]); 
                 
-                System.out.println(nota.toString(4));
                 String claves = "\"HESOYAM\\nLXGIWYL\"";
                 String str_js = "{ notes: [{titulo: Claves GTA San andreas PC, note: "+ claves +", fecha_modificacion: "+ date_now +"}] }";
                 
                 String str_js2 = "{ prueba: [{texto: HOla}] }";
+                String str_js3 = "{ notes: [{note: \"No c, weno si c pero no te wa decir\"}] }";
                 
                 String[] arr_changes = {
-                    str_js, str_js2
+                    str_js, str_js2, str_js3
                 };
                 
-                JSONObject cambios = new JSONObject(arr_changes[1]);
+                /*JSONObject cambios = new JSONObject(arr_changes[2]);
                 boolean exito = admin.updateIntoArray(nota, cambios);
                 
                 if(exito) {
@@ -86,7 +86,15 @@ public class Main {
                 
                 } else {
                     System.out.println("Registro no encontrado");
-                }
+                }*/
+                
+                String[] targets = {
+                    "{ notes: [{id_note: 1}] }"
+                };
+                
+                //admin.delete(param_1);
+                JSONObject target = new JSONObject(targets[0]);
+                admin.deleteIntoArray(busqueda, target);
             }
             
             /*

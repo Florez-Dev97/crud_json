@@ -281,7 +281,6 @@ public class Manejador {
                 obj_arr_criteria = arr_criteria.getJSONObject(0);
                 obj_arr_changes = arr_changes.getJSONObject(0);
                 
-
                 idx_arr_registro = obj_arr_criteria.getInt("idx");
                 obj_arr_registro = arr_registro.getJSONObject( idx_arr_registro );
 
@@ -297,11 +296,79 @@ public class Manejador {
                 js_obj.put(this.nom_coleccion, js_array.put(idx_registro, registro));
                 retorno = true;
             }
-        
         }
         
         this.src_archivo = js_obj.toString(4);
         this.saveFile();
+        return retorno;
+    }
+    
+    public boolean delete(JSONObject criteria) throws JSONException, IOException {
+        boolean retorno = false;
+        
+        JSONObject js_obj = new JSONObject( this.src_archivo );
+        JSONArray js_array = (JSONArray) js_obj.get( this.nom_coleccion );
+        
+        JSONObject busqueda = this.Select(criteria);
+        
+        if(!busqueda.equals(this.dont_exists)) {
+            System.out.println(busqueda.toString(4));
+            
+            int indice = busqueda.getInt("idx");
+            System.out.println(indice);
+            
+            js_array.remove(indice);
+            js_obj.put(this.nom_coleccion, js_array);
+            
+            retorno = true;
+            
+            this.src_archivo = js_obj.toString(4);
+            this.saveFile();
+        }
+        
+        return retorno;
+    }
+    
+    public boolean deleteIntoArray(JSONObject criteria, JSONObject target) throws JSONException, IOException {
+        boolean retorno = false;
+
+        JSONObject js_obj = new JSONObject( this.src_archivo );
+        JSONArray js_array = (JSONArray) js_obj.get( this.nom_coleccion );
+        
+        System.out.println(criteria.toString(4));
+        
+        if(criteria.has("idx")) {
+            int idx_registro = criteria.getInt("idx");
+            int idx_arr_obj = 0;
+            
+            JSONObject registro = js_array.getJSONObject(idx_registro);
+            
+            JSONArray arr_registro, arr_criteria;
+            JSONObject obj_arr_criteria;
+            
+            Iterator it_target = target.keys();
+            if(it_target.hasNext()) {
+                String key = it_target.next().toString();
+                
+                arr_registro = registro.getJSONArray(key);
+                arr_criteria = criteria.getJSONArray(key);
+
+                obj_arr_criteria = arr_criteria.getJSONObject(0);
+                
+                idx_arr_obj = obj_arr_criteria.getInt("idx");
+                
+                arr_registro.remove(idx_arr_obj);
+                registro.put(key, arr_registro);
+                
+                js_array.put(idx_registro, registro);
+                js_obj.put(this.nom_coleccion, js_array);
+                retorno = true;
+                
+                this.src_archivo = js_obj.toString(4);
+                this.saveFile();
+            }
+        }
+        
         return retorno;
     }
 }
